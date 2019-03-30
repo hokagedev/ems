@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+body {
+    background-color: #fafafa;
+    margin: 0;
+    padding: 0;
+}
+.mat-snack-bar-container {
+    background-color: #e0e1e2;
+    opacity: 0.95 !important;
+}
+.warningSnackBar {
+    color:#ff3300;
+}

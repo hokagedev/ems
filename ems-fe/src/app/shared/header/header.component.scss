@@ -1,0 +1,20 @@
+.header-container {
+    position: relative;
+    background-color: #673ab7;
+    color: white;
+    border-bottom: 1px solid rgba(0,0,0,.03);
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 16px;
+    .right-buttons {
+        position: absolute;
+        right: 0;
+    }
+    .login-logo {
+        height: 26px;
+        margin: 0 4px 3px 0;
+    }
+}

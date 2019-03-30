@@ -1,0 +1,17 @@
+<form class="login-container">
+  <mat-form-field>
+    <input matInput placeholder="Username" [formControl]="userNameFc" required>
+    <mat-error *ngIf="userNameFc.invalid">
+      Username is required!
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Password" [formControl]="passwordFc" required>
+    <mat-error *ngIf="passwordFc.invalid">
+      Password is required!
+    </mat-error>
+  </mat-form-field>
+  <div class="confirm-wrapper">
+    <button mat-raised-button color="primary" (click)="login()">Login</button>
+  </div>
+</form>
