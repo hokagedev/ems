@@ -26,20 +26,29 @@ export class LoginComponent implements OnInit {
     if (this.userNameFc.invalid || this.passwordFc.invalid) {
       return;
     }
-    if (this.authService.login(this.userNameFc.value, this.passwordFc.value) != null) {
-      this.router.navigateByUrl('home');
-    } else {
-      this.snackBar.open(
-        'Username or password is invalid!',
-        '',
-        {
-          duration: 3500,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: 'warningSnackBar'
-        }
-      );
+    const user = this.authService.login(this.userNameFc.value, this.passwordFc.value);
+    if (user == null) {
+      this.openSnackBar('Username or password is invalid!');
+      return;
     }
+    if ( user != null && user.isLocked) {
+      this.openSnackBar('Account is blocked!');
+      return;
+    }
+    user.isUserAdmin ? this.router.navigateByUrl('user') : this.router.navigateByUrl('home');
+
   }
 
+  openSnackBar(message) {
+    this.snackBar.open(
+      message,
+      '',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: 'warningSnackBar'
+      }
+    );
+  }
 }

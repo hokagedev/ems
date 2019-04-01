@@ -4,15 +4,15 @@ export interface IEmsUser {
     password: string;
     firstName: string;
     lastName: string;
-    isLocked: boolean;
-    isUserAdmin: boolean;
     gender: number;
     phone: string;
     eMail: string;
-    creator: string;
-    created: Date;
-    modifier: string;
-    modified: Date;
+    isUserAdmin: boolean;
+    isLocked: boolean;
+    // creator: string;
+    // created: Date;
+    // modifier: string;
+    // modified: Date;
 }
 
 export class EmsUser {
@@ -21,15 +21,15 @@ export class EmsUser {
     public password: string;
     public firstName: string;
     public lastName: string;
-    public isLocked: boolean;
-    public isUserAdmin: boolean;
     public gender: number;
     public phone: string;
     public eMail: string;
-    public creator: string;
-    public created: Date;
-    public modifier: string;
-    public modified: Date;
+    public isUserAdmin: boolean;
+    public isLocked: boolean;
+    // public creator: string;
+    // public created: Date;
+    // public modifier: string;
+    // public modified: Date;
 
     constructor(data?: EmsUser) {
         if (data) {

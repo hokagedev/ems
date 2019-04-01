@@ -22,6 +22,10 @@ const appRoutes: Routes = [
     loadChildren: './modules/home/home.module#HomeModule'
   },
   {
+    path: 'user',
+    loadChildren: './modules/user-management/user-management.module#UserManagementModule'
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }
