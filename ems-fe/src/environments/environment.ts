@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api: {
+    host: 'http://localhost:9999/',
+  },
+  auth : {
+    clientId: '4ae64116d8545d469511c2ed4fa15f7d',
+    domain: 'ems.com',
+    audience: 'http://localhost:9999',
+    authurl: 'http://localhost:9999',
+    authloginpath: '/login',
+  },
 };
 
 /*

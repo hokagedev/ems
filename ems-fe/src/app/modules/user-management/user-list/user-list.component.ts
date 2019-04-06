@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { EmsUser } from '../../auth/models/user.model';
 import { UserManagementService } from '../user-management.service';
@@ -15,24 +16,24 @@ export class UserListComponent implements OnInit {
 
   dataSource: MatTableDataSource<EmsUser>;
   displayedColumns = [
-    'userId',
     'username',
     'firstName',
     'lastName',
     'gender',
     'phone',
-    'eMail',
-    'isUserAdmin',
+    'email',
+    'role',
     'isLocked'
   ];
 
   constructor(
-    private userManagementService: UserManagementService
+    private userManagementService: UserManagementService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.userManagementService.getUsers().subscribe(users => {
-      this.dataSource = new MatTableDataSource(users);
+    this.userManagementService.getUsers().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data['users']);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -46,4 +47,7 @@ export class UserListComponent implements OnInit {
     }
   }
 
+  edit(row) {
+    this.router.navigate(['user', row.userId]);
+  }
 }

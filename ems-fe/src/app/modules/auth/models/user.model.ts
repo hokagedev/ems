@@ -7,12 +7,12 @@ export interface IEmsUser {
     gender: number;
     phone: string;
     eMail: string;
-    isUserAdmin: boolean;
+    role: string;
     isLocked: boolean;
-    // creator: string;
-    // created: Date;
-    // modifier: string;
-    // modified: Date;
+    creator: string;
+    created: Date;
+    modifier: string;
+    modified: Date;
 }
 
 export class EmsUser {
@@ -24,12 +24,12 @@ export class EmsUser {
     public gender: number;
     public phone: string;
     public eMail: string;
-    public isUserAdmin: boolean;
+    public role: string;
     public isLocked: boolean;
-    // public creator: string;
-    // public created: Date;
-    // public modifier: string;
-    // public modified: Date;
+    public creator: string;
+    public created: Date;
+    public modifier: string;
+    public modified: Date;
 
     constructor(data?: EmsUser) {
         if (data) {

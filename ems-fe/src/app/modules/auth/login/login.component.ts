@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { ConfigsService } from 'src/app/configs/configs.service';
+
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'ems-login',
@@ -12,31 +15,59 @@ import { MatSnackBar } from '@angular/material';
 export class LoginComponent implements OnInit {
   userNameFc = new FormControl('', [Validators.required]);
   passwordFc = new FormControl('', [Validators.required]);
+  returnUrl: string;
+  loading = false;
 
   constructor(
     private authService: AuthService,
+    private configsService: ConfigsService,
     private snackBar: MatSnackBar,
-    private router: Router
-  ) { }
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.configsService.config = {
+      layout: {
+        navbar: {
+          hidden: true
+        },
+        sidebar: {
+          hidden: true
+        },
+      }
+    };
+  }
 
   ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/']);
+    }
   }
 
   login() {
     if (this.userNameFc.invalid || this.passwordFc.invalid) {
       return;
     }
-    const user = this.authService.login(this.userNameFc.value, this.passwordFc.value);
-    if (user == null) {
-      this.openSnackBar('Username or password is invalid!');
-      return;
-    }
-    if ( user != null && user.isLocked) {
-      this.openSnackBar('Account is blocked!');
-      return;
-    }
-    user.isUserAdmin ? this.router.navigateByUrl('user') : this.router.navigateByUrl('home');
-
+    this.loading = true;
+    this.authService.login(this.userNameFc.value, this.passwordFc.value, this.returnUrl)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.userNameFc.reset();
+          this.passwordFc.reset();
+          this.router.navigate(['/user']);
+        },
+        error => {
+          if (error.error.code !== undefined &&
+            error.error.message !== undefined &&
+            error.error.code === 'OP_EXCEPTION') {
+            this.openSnackBar(error.error.message);
+          } else {
+            this.openSnackBar('Incorrect email or password');
+          }
+          this.loading = false;
+        }
+      );
   }
 
   openSnackBar(message) {
